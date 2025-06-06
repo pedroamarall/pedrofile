@@ -1,4 +1,4 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome to the site!"
+  "title": "Welcome",
+  "description": "This is the homepage"
 }
