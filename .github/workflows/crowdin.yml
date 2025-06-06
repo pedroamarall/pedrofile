@@ -14,9 +14,11 @@ jobs:
 
       - uses: crowdin/github-action@v1
         with:
-          upload_sources: false               # Não envia novos arquivos
+          upload_sources: true               # Não envia novos arquivos
           download_translations: true         # Baixa traduções atualizadas
-          create_pull_request: true           # Cria um PR automaticamente
+          create_pull_request: true   # Cria um PR automaticamente
+          export_only_approved: false       # <--- isso permite baixar as traduções automáticas
         env:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
