@@ -1,0 +1,22 @@
+name: Sync Crowdin Translations
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Roda todo dia à meia-noite
+  workflow_dispatch:     # Também permite executar manualmente pelo GitHub
+
+jobs:
+  sync-translations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: crowdin/github-action@v1
+        with:
+          upload_sources: false               # Não envia novos arquivos
+          download_translations: true         # Baixa traduções atualizadas
+          create_pull_request: true           # Cria um PR automaticamente
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
