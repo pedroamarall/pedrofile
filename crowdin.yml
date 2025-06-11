@@ -1,5 +1,5 @@
-project_id: '%CROWDIN_PROJECT_ID%'
-api_token: '%CROWDIN_PERSONAL_TOKEN%' # Ou '%CROWDIN_API_TOKEN%' se esse for o nome do seu segredo no GitHub
+project_id: 797530
+api_token: '%CROWDIN_PERSONAL_TOKEN%' # Ou '%CROWDIN_API_TOKEN%', depende de como você nomeou o segredo
 
 files:
   - source: /locales/en/*.json
