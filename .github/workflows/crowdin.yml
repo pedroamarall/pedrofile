@@ -6,7 +6,7 @@ on:
       - 'locales/en/**'
       - 'crowdin.yml'
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */6 * * *' # Executa a cada 6 horas
 
 jobs:
   sync-with-crowdin:
@@ -18,11 +18,26 @@ jobs:
       - name: Sync with Crowdin
         uses: crowdin/github-action@v1
         with:
+          # Ação de upload e download
           upload_sources: true
           download_translations: true
+
+          # Configurações do Pull Request
           create_pull_request: true
           pull_request_title: 'i18n: novas traduções do Crowdin'
-          pull_request_branch_name: 'crowdin-translations'
+          
+          # CORREÇÃO AQUI: Use 'localization_branch_name' para a branch que o Crowdin cria
+          localization_branch_name: 'crowdin-translations'
+          
+          # E se você quiser especificar a branch base para o PR (ex: 'main' ou 'master')
+          # pull_request_base_branch_name: 'main' # Remova ou ajuste se não precisar especificar
+
+          # Garanta que a ação Crowdin saiba onde está seu arquivo de configuração
+          config: 'crowdin.yml' # Assumindo que está na raiz do seu repositório
+
         env:
+          # Essas variáveis de ambiente são passadas para o container Docker
+          # onde o Crowdin CLI é executado, e ele vai usá-las para preencher
+          # os placeholders no crowdin.yml
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
