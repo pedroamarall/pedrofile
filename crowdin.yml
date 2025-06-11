@@ -1,8 +1,9 @@
-project_id_env: 797530
-api_token_env: 220b7b8cfa84d13cc9f0287ee627d0625a3e28aaefd96966f697a1b87cd0e185fd3a3abdd7fbc52e
+project_id: 797530
+api_token: '%CROWDIN_PERSONAL_TOKEN%' # Ou '%CROWDIN_API_TOKEN%', depende de como você nomeou o segredo
 
 files:
   - source: /locales/en/*.json
     translation: /locales/%two_letters_code%/%original_file_name%
+
 bundles:
   - 1
