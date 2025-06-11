@@ -1,43 +1,24 @@
-name: Crowdin Sync
+name: Sync Crowdin Translations
 
 on:
-  push:
-    paths:
-      - 'locales/en/**'
-      - 'crowdin.yml'
   schedule:
-    - cron: '0 */6 * * *' # Executa a cada 6 horas
+    - cron: '0 0 * * *' # Roda todo dia à meia-noite
+  workflow_dispatch:     # Também permite executar manualmente pelo GitHub
 
 jobs:
-  sync-with-crowdin:
+  sync-translations:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: Sync with Crowdin
-        uses: crowdin/github-action@v1
+      - uses: crowdin/github-action@v1
         with:
-          # Ação de upload e download
-          upload_sources: true
-          download_translations: true
-
-          # Configurações do Pull Request
-          create_pull_request: true
-          pull_request_title: 'i18n: novas traduções do Crowdin'
-          
-          # CORREÇÃO AQUI: Use 'localization_branch_name' para a branch que o Crowdin cria
-          localization_branch_name: 'crowdin-translations'
-          
-          # E se você quiser especificar a branch base para o PR (ex: 'main' ou 'master')
-          # pull_request_base_branch_name: 'main' # Remova ou ajuste se não precisar especificar
-
-          # Garanta que a ação Crowdin saiba onde está seu arquivo de configuração
-          config: 'crowdin.yml' # Assumindo que está na raiz do seu repositório
-
+          upload_sources: true               # Não envia novos arquivos
+          download_translations: true         # Baixa traduções atualizadas
+          create_pull_request: true   # Cria um PR automaticamente
+          export_only_approved: false       # <--- isso permite baixar as traduções automáticas
         env:
-          # Essas variáveis de ambiente são passadas para o container Docker
-          # onde o Crowdin CLI é executado, e ele vai usá-las para preencher
-          # os placeholders no crowdin.yml
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
