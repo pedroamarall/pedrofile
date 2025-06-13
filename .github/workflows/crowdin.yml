@@ -1,28 +1,26 @@
-name: Crowdin Action
+name: Crowdin Translation Sync
 
 on:
-  workflow_dispatch: # permite rodar manualmente
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  sync-with-crowdin:
+  sync-crowdin:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
-      - name: Crowdin sync
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Crowdin Action
         uses: crowdin/github-action@v1
         with:
           upload_sources: true
           download_translations: true
           create_pull_request: true
-          pull_request_title: 'Crowdin translations update'
-          pull_request_body: 'Atualizações automáticas do Crowdin'
-          pull_request_base_branch_name: master
-          localization_branch_name: l10n_master3
-          commit_message: 'chore: Crowdin translations'
+          pull_request_title: 'chore: update translations from Crowdin'
+          localization_branch_name: 'crowdin-translations'
         env:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
