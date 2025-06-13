@@ -23,5 +23,5 @@ jobs:
           pull_request_title: 'chore: update translations from Crowdin'
           localization_branch_name: 'crowdin-translations'
         env:
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
