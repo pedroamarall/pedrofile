@@ -1,4 +1,4 @@
-name: Crowdin Translation Sync
+name: Crowdin Sync
 
 on:
   push:
@@ -6,18 +6,16 @@ on:
       - main
 
 permissions:
-  contents: write  # opcional, mas deixa explícito
+  contents: write
+  pull-requests: write
 
 jobs:
-  sync-crowdin:
+  sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Run Crowdin Action
-        uses: crowdin/github-action@v2.3.0   # versão atualizada
+      - uses: crowdin/github-action@v2.3.0
         with:
           upload_sources: true
           download_translations: true
@@ -27,4 +25,4 @@ jobs:
         env:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}   # usa o PAT aqui no lugar do GITHUB_TOKEN padrão
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
